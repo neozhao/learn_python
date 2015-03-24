@@ -9,9 +9,9 @@ def list_files(path):
 		file_path = os.path.join(path, f);
 		if not f.startswith('.'):
 			if os.path.isfile(file_path):
-				files.append(f)
+				files.append(file_path);
 			elif os.path.isdir(file_path):
-				files.extend(list_files(file_path))
+				files.extend(list_files(file_path));
 
 	return files;
 
