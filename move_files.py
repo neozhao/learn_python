@@ -16,6 +16,7 @@ def list_files(root_directory):
 	return files;
 
 def move_files(destination_directory, files, is_copy = True):
+	'''Move or copy all the files to the destination directory'''
 	new_files = [];
 	for f in files:
 		destination_path = os.path.join(destination_directory, os.path.basename(f));
@@ -30,10 +31,20 @@ def move_files(destination_directory, files, is_copy = True):
 root_directory = input('Please input the root directory: '); # /Users/neo/Documents/projects/python
 destination_directory = input('Please input the destination directory: '); # /Users/neo/Documents/projects/test
 
+# If destination directory is not provided, default to use the root directory
+if not destination_directory:
+	destination_directory = root_directory;
+
+files = list_files(root_directory);
+
+if not files:
+	print('No files');
+	quit();
+
+# Create the destination directory if it's not exist
 if not os.path.exists(destination_directory):
 	os.makedirs(destination_directory);
 
-files = list_files(root_directory);
 files = move_files(destination_directory, files, False);
 
 print(files);
