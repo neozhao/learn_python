@@ -11,11 +11,17 @@ def list_directories(root_directory, file_types = [], start_time = None):
 		path = os.path.join(root_directory, f);
 		ext = os.path.splitext(f)[1][1:].lower();
 		created_time = os.stat(path).st_ctime;
+		size = os.stat(path).st_size;
 
 		if not f.startswith('.'):
 			if os.path.isfile(path):
 				if (not file_types or ext in file_types) and (not start_time or created_time > start_time):
-					print(f + ', type: ' + ext + ', created at: ' + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(created_time)));
+					print(
+						f + 
+						', type: ' + ext + 
+						', created at: ' + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(created_time)) + 
+						', size: ' + str(round(size / 1024)) + 'KB'
+					);
 			if os.path.isdir(path):
 				list_directories(path, file_types, start_time);
 			
@@ -28,6 +34,6 @@ config.read('../data/default.config');
 if not root_directory:
 	root_directory = config['DEFAULT']['root_directory'];
 
-list_directories(root_directory, ['jpb'], datetime.datetime(2015, 3, 20).timestamp());
+list_directories(root_directory, ['jpg'], datetime.datetime(2015, 3, 20).timestamp());
 # list_directories(root_directory, ['jpg']);
 # list_directories(root_directory, [], datetime.datetime(2015, 3, 20).timestamp());
