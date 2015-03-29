@@ -1,4 +1,12 @@
-file_path = input('Please input the file path: '); # /Users/neo/Documents/projects/test/text.txt
+import configparser
+
+file_path = input('Please input the file path: ');
+
+config = configparser.ConfigParser();
+config.read('../data/default.config');
+
+if not file_path:
+	file_path = config['DEFAULT']['file_path'];
 
 try:
 	data = open(file_path);
